@@ -1,8 +1,8 @@
 let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("Canvas"));
 let ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
 
-canvas.width = 1920;
-canvas.height = 1080;
+canvas.width = window.innerWidth;
+canvas.height = window.innerWidth;
 
 ctx.fillStyle = "#BB0055";
 
@@ -13,57 +13,15 @@ canvas.addEventListener("mousemove", (event) => {
     mouseY = event.clientY;
 })
 
-// pexels fetch wrapper
-let pexelsAPIkey = "563492ad6f91700001000001b905f16850294380a98c90d2650c4e86";
-function createFetchWrapperPexels(apiKey, type) {
-
-    const _requestSettings = {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "User-Agent": "Pexels/JavaScript",
-            Authorization: apiKey,
-        },
-    };
-
-    const pexelsBaseUrls = {
-        photo: "https://api.pexels.com/v1/",
-        video: "https://api.pexels.com/videos/",
-        collections: "https://api.pexels.com/v1/collections/",
-    };
-
-    let baseUrl = pexelsBaseUrls[type]
-    return (path, params) => {
-        fetch(`${baseUrl}${path}?${stringifyParams(params || {})}`, _requestSettings).then(
-            (response) => {
-                if (!response.ok) {
-                    throw new Error(response.statusText);
-                }
-
-                return response.json();
-            }
-        );
-    }
-
-    function stringifyParams(params) {
-        return Object.keys(params)
-            .map((key) => `${key}=${params[key]}`)
-            .join("&");
-    }
-}
-createFetchWrapperPexels(pexelsAPIkey, "collections")
-
-// end Pexels
-
 let time = 0.9;
 let yoff = 0.00;
 function draw() {
 
     // RESET
-    ctx.clearRect(0, 0, 1920, 1080);
-    let gradient = ctx.createLinearGradient(0, 0, 640, 480)
-    gradient.addColorStop(0, "blue")
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+    gradient.addColorStop(0, "red")
+    gradient.addColorStop(.5, "crimson")
     gradient.addColorStop(1, "black")
     ctx.fillStyle = gradient;
     // ctx.fillStyle = "crimson";
@@ -73,12 +31,15 @@ function draw() {
 
 
     // DRAW CIRCLES
-    for (let i = 0; i < 25; i++) {
-        for (let j = 0; j < 25; j++) {
-            const radius = 10;
+    let circlesAmount = 25;
+    for (let i = 0; i < circlesAmount; i++) {
+        for (let j = 0; j < circlesAmount; j++) {
+            const radius = (canvas.width/circlesAmount) / 2;
             const maxDistance = 91;
-            let x = 20 * i + radius;
-            let y = 20 * j + radius;
+            // let x = 20 * i + radius;
+            // let y = 20 * j + radius;
+            let x = radius + radius * i;
+            let y = radius + radius * j
             // let distance = Math.sqrt(
             //     Math.pow(Math.abs(mouseX - x - (radius * Math.sign(mouseX - x))), 2) +
             //     Math.pow(Math.abs(mouseY - y - (radius * Math.sign(mouseY - y))), 2)
