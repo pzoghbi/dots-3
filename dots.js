@@ -1,8 +1,8 @@
 let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("Canvas"));
 let ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
 
-canvas.width = 640;
-canvas.height = 480;
+canvas.width = 1920;
+canvas.height = 1080;
 
 ctx.fillStyle = "#BB0055";
 
@@ -61,7 +61,7 @@ let yoff = 0.00;
 function draw() {
 
     // RESET
-    ctx.clearRect(0, 0, 640, 480);
+    ctx.clearRect(0, 0, 1920, 1080);
     let gradient = ctx.createLinearGradient(0, 0, 640, 480)
     gradient.addColorStop(0, "blue")
     gradient.addColorStop(1, "black")
