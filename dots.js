@@ -1,8 +1,8 @@
 let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("Canvas"));
 let ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext("2d"));
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerWidth;
+canvas.width = Math.max(window.innerWidth, window.innerHeight);
+canvas.height = Math.max(window.innerWidth, window.innerHeight);
 
 ctx.fillStyle = "#BB0055";
 
@@ -15,13 +15,20 @@ canvas.addEventListener("mousemove", (event) => {
 
 let time = 0.9;
 let yoff = 0.00;
+
+window.addEventListener("resize", ()=>{
+    canvas.width = Math.max(window.innerWidth, window.innerHeight);
+    canvas.height = Math.max(window.innerWidth, window.innerHeight);
+})
+
 function draw() {
 
     // RESET
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-    gradient.addColorStop(0, "red")
-    gradient.addColorStop(.5, "crimson")
+    gradient.addColorStop(0, "black")
+    gradient.addColorStop(0.25, "blue")
+    gradient.addColorStop(.75, "crimson")
     gradient.addColorStop(1, "black")
     ctx.fillStyle = gradient;
     // ctx.fillStyle = "crimson";
@@ -31,15 +38,16 @@ function draw() {
 
 
     // DRAW CIRCLES
-    let circlesAmount = 25;
+    let circlesAmount = 30;
     for (let i = 0; i < circlesAmount; i++) {
         for (let j = 0; j < circlesAmount; j++) {
             const radius = (canvas.width/circlesAmount) / 2;
-            const maxDistance = 91;
+            console.log(radius)
+            const maxDistance = canvas.width / circlesAmount;
             // let x = 20 * i + radius;
             // let y = 20 * j + radius;
-            let x = radius + radius * i;
-            let y = radius + radius * j
+            let x = radius + radius*2 * i;
+            let y = radius + radius*2 * j
             // let distance = Math.sqrt(
             //     Math.pow(Math.abs(mouseX - x - (radius * Math.sign(mouseX - x))), 2) +
             //     Math.pow(Math.abs(mouseY - y - (radius * Math.sign(mouseY - y))), 2)
@@ -85,7 +93,7 @@ function draw() {
                 // (   Math.pow(cos(x) + cos(time/10), 2) - 1 + 
                 //     Math.pow(sin(y) + sin(time/10), 2) - 1), 1)
                 ctx.fillStyle = `hsl(${hue + 180*m.sinrad(time*x)}, ${sat}%, ${val}%)`;
-                ctx.fillStyle = "white"
+                // ctx.fillStyle = "white"
                 // ctx.strokeStyle = "white"
                 // let _radius = 2.5 * radius / 3 + radius / 6 * (Math.sin(time * 2 * Math.PI / 360))
                 // _radius = radius + (cosrad(i)+sinrad(j)-2) * distanceRatioUncapped;
@@ -123,6 +131,7 @@ function draw() {
     // Shadow
     time += .01;
     yoff += .1;
+    return 1;
 }
 
 setInterval(draw, 1000 / 60)
