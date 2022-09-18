@@ -25,10 +25,8 @@ function draw() {
 
     // RESET
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+    let gradient = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight)
     gradient.addColorStop(0, "black")
-    gradient.addColorStop(0.25, "blue")
-    gradient.addColorStop(.75, "crimson")
     gradient.addColorStop(1, "black")
     ctx.fillStyle = gradient;
     // ctx.fillStyle = "crimson";
@@ -42,12 +40,17 @@ function draw() {
     for (let i = 0; i < circlesAmount; i++) {
         for (let j = 0; j < circlesAmount; j++) {
             const radius = (canvas.width/circlesAmount) / 2;
+            let diameter = radius * 2;
             console.log(radius)
-            const maxDistance = canvas.width / circlesAmount;
             // let x = 20 * i + radius;
             // let y = 20 * j + radius;
-            let x = radius + radius*2 * i;
-            let y = radius + radius*2 * j
+            let x = radius + diameter * i;
+            let y = radius + diameter * j
+            const maxDistance = 
+                diameter * radius/(circlesAmount-j) + 
+                diameter * radius/(circlesAmount-i) +
+                diameter * radius/i +
+                diameter * radius/j;
             // let distance = Math.sqrt(
             //     Math.pow(Math.abs(mouseX - x - (radius * Math.sign(mouseX - x))), 2) +
             //     Math.pow(Math.abs(mouseY - y - (radius * Math.sign(mouseY - y))), 2)
@@ -87,13 +90,13 @@ function draw() {
                 ctx.beginPath();
                 let hue = parseInt(distanceRatio * 360);
                 let sat = parseInt(distanceRatio * 50+50);
-                let val = parseInt(m.sin(distanceRatio) * 20 + 70);
+                let val = parseInt(m.sin(distanceRatio) * 20 + 80);
                 // ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, " + val + "%)"; // colorful
                 // let broj = clamp0((-1 / i) + (sinrad(Math.pow(i+1, 2))) - 1 - 
                 // (   Math.pow(cos(x) + cos(time/10), 2) - 1 + 
                 //     Math.pow(sin(y) + sin(time/10), 2) - 1), 1)
                 ctx.fillStyle = `hsl(${hue + 180*m.sinrad(time*x)}, ${sat}%, ${val}%)`;
-                // ctx.fillStyle = "white"
+                ctx.fillStyle = "white"
                 // ctx.strokeStyle = "white"
                 // let _radius = 2.5 * radius / 3 + radius / 6 * (Math.sin(time * 2 * Math.PI / 360))
                 // _radius = radius + (cosrad(i)+sinrad(j)-2) * distanceRatioUncapped;
