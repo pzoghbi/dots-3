@@ -42,6 +42,31 @@ class RenderingContext {
     }
 }
 
+class Dot {
+    constructor(x, y) {
+        this.x = x
+        this.y = y;
+        this.defaultRadius = 10;
+        this.radius = this.defaultRadius;
+        this.color = {r: 0, g: 0, b: 0, a: 1};
+    }
+}
+
+let maxRowsCols = 29;
+let canvasRatio = Math.min(canvas.width / canvas.height, canvas.height / canvas.width)
+
+
+    
+
+let dots = [];
+for(let i = 0; i < maxRowsCols; i++){
+    for(let j = 0; j < maxRowsCols; j++){
+        // todo: (calculate maxrowscols)
+        dots.push(new Dot(i*50, j*50))
+    }
+}
+console.log(dots)
+
 function draw() {
     
     // RESET
@@ -54,14 +79,9 @@ function draw() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fill();
 
-
-    // DRAW CIRCLES
-    let circlesAmount = 29;
-    let canvasRatio = Math.min(canvas.width / canvas.height, canvas.height / canvas.width)
-    
-    for (let i = 0; i < (Math.floor(circlesAmount*canvasRatio)); i++) {
-        for (let j = 0; j < Math.floor(circlesAmount*canvasRatio); j++) {
-            const radius = (canvas.width/circlesAmount) / 2;
+    for (let i = 0; i < (Math.floor(maxRowsCols*canvasRatio)); i++) {
+        for (let j = 0; j < Math.floor(maxRowsCols*canvasRatio); j++) {
+            const radius = (canvas.width/maxRowsCols) / 2;
             let diameter = radius * 2;
             // let x = 20 * i + radius;
             // let y = 20 * j + radius;
@@ -111,8 +131,8 @@ function draw() {
                 // let broj = clamp0((-1 / i) + (sinrad(Math.pow(i+1, 2))) - 1 - 
                 // (   Math.pow(cos(x) + cos(time/10), 2) - 1 + 
                 //     Math.pow(sin(y) + sin(time/10), 2) - 1), 1)
-                // ctx.fillStyle = `hsl(${hue + 180*m.sinrad(time*x)}, ${sat}%, ${val}%)`;
-                ctx.fillStyle = "white"
+                ctx.fillStyle = `hsl(${hue + 180*m.sinrad(time*x)}, ${sat}%, ${val}%)`;
+                // ctx.fillStyle = "white"
                 // ctx.strokeStyle = "white"
                 // let _radius = 2.5 * radius / 3 + radius / 6 * (Math.sin(time * 2 * Math.PI / 360))
                 // _radius = radius + (cosrad(i)+sinrad(j)-2) * distanceRatioUncapped;
@@ -120,12 +140,12 @@ function draw() {
                 // _radius = 
                 //     clamp0(radius + broj, radius)
 
-                let _radius = radius
+                let _radius = Math.max(radius * ( .5 + .5*distanceRatio ), radius * 3/5)
                 ctx.ellipse(
                     (x + m.cosrad(x) * 3 - 3 + m.cosrad(y) - 1),
                     (y + m.sinrad(y) * 3 - 3 + m.sinrad(y) - 1),
-                    Math.max(_radius * distanceRatio, radius * 3 / 5),
-                    Math.max(_radius * distanceRatio, radius * 3 / 5),
+                    _radius,
+                    _radius,
                     0, 0, Math.PI * 2);
 
                 
@@ -144,8 +164,15 @@ function draw() {
             ctx.fill();
         }
     }
-    let a = ctx.getImageData(0, 0, 1, 1)
-    console.log(a.data)
+
+
+    ctx.fillStyle = ("rgb(0, 162, 255)")
+    ctx.fillRect(250, 180, 540, 180)
+    ctx.strokeStyle = ("white")
+    ctx.lineWidth = 3
+    ctx.strokeRect(260, 190, 520, 160)
+    ctx.fillStyle = "white"
+    ctx.fillText("Hello, tasks for today:", 290, 235)
 
     time += .01;
     yoff += .1;
