@@ -32,8 +32,8 @@ function draw() {
     // RESET
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let gradient = ctx.createLinearGradient(0, 0, 0, window.innerHeight)
-    gradient.addColorStop(0, "crimson")
-    gradient.addColorStop(1, "royalblue")
+    gradient.addColorStop(0, "brown")
+    gradient.addColorStop(1, "orange")
     ctx.fillStyle = gradient;
     // ctx.fillStyle = "crimson";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -91,7 +91,7 @@ function draw() {
                 // let broj = clamp0((-1 / i) + (sinrad(Math.pow(i+1, 2))) - 1 - 
                 // (   Math.pow(cos(x) + cos(time/10), 2) - 1 + 
                 //     Math.pow(sin(y) + sin(time/10), 2) - 1), 1)
-                ctx.fillStyle = `hsl(${hue + 180*m.sinrad(time/4*x)}, ${0}%, ${lit + m.sinrad(time/2*m.sin(x))}%, .1)`;
+                ctx.fillStyle = `hsl(${hue + 180*m.sinrad(time/4*x)}, ${50}%, ${lit + m.sinrad(time/2*m.sin(x))}%, .5)`;
                 // ctx.fillStyle = "white"
                 // ctx.strokeStyle = "white"
                 // let _radius = 2.5 * radius / 3 + radius / 6 * (Math.sin(time * 2 * Math.PI / 360))
