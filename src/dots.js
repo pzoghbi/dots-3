@@ -133,3 +133,9 @@ function draw() {
 }
 
 setInterval(draw, 1000 / 60)
+
+exports.printMsg=()=>{
+    return {
+        "context": ctx
+    }
+}
