@@ -1,7 +1,6 @@
-# dots-3
+# dots-3 Wallpaper
 
-just jump to a specific commit to see different effects  
+Wallpaper for Wallpaper Engine made using javascript canvas and some math magic :)  
+
+jump to a specific commit to see different effects  
 resize supported on "soft surface"  
-i think
-
-.rar should be the version that's on the Wallpaper Engine Workshop
