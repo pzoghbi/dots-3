@@ -1,4 +1,4 @@
-# dots-3 Wallpaper
+# Dots 3 Wallpaper
 
 Wallpaper for Wallpaper Engine made using javascript Canvas and some math magic :)  
 
